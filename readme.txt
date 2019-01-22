@@ -10,3 +10,4 @@ map status can be viewed in the public page
 map can be downloaded
 
 send email to user on approval
+(additional) comments on map page
