@@ -1,0 +1,36 @@
+tables general structure
+
+create table maps(
+name of map (pkey),
+description (255),
+submitter (255),
+file,
+status (reivewed/pending) (255),
+preview image,
+upload date,
+)
+
+create table users(
+username (pkey),
+email,
+password,
+join date,
+admin (yes/no),
+)
+
+comments(
+name of map (pkey)(255),
+timestamp,
+comment (255),
+username (ref username in users)(255),
+)
+
+optional:
+create table votes(
+username,
+mapname,
+vote (up/down),
+superkey (username, mapname),
+username ref username in users,
+mapname ref name of map in maps,
+)
