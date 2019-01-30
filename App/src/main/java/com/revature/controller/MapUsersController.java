@@ -1,6 +1,8 @@
 package com.revature.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,8 +47,14 @@ public class MapUsersController {
 			@Valid
 			MapUsers adder, Errors errors)
 			{
-		if(errors.hasErrors())
+		if(errors.hasErrors()) {
+			System.out.println(errors);
+			System.out.println(adder.toString());
 			return null;
+		}
+		adder.setJoindate(new Date());
+		
+		System.out.println(adder.getJoindate());
 		dao.save(adder);
 		return adder;
 	}
