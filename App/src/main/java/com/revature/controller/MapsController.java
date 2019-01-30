@@ -1,6 +1,7 @@
 package com.revature.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.revature.dao.MapsDao;
+import com.revature.entity.MapUsers;
 import com.revature.entity.Maps;
 
 @RestController
@@ -34,6 +36,29 @@ public class MapsController {
 		return dao.findAll();
 	}
 	
+	@GetMapping("/maps/search/{mapname}")
+	public Maps findByMapname(@PathVariable("mapname") String mapname) {
+		return dao.findByMapname(mapname);
+	}
 	
+	@GetMapping("/maps/status/{status}")
+	public List<Maps> getByStatus(@PathVariable("status") String status){
+		return  dao.findByStatus(status);
+	}
+	
+	@PostMapping("/maps/add")
+	public @Valid Maps add(
+			@RequestBody
+			@Valid
+			Maps adder, Errors errors)
+			{
+		if(errors.hasErrors()) {
+			return null;
+		}
+		adder.setUploaddate(new Date());
+		
+		dao.save(adder);
+		return adder;
+	}
 
 }

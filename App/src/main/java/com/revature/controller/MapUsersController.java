@@ -48,13 +48,10 @@ public class MapUsersController {
 			MapUsers adder, Errors errors)
 			{
 		if(errors.hasErrors()) {
-			System.out.println(errors);
-			System.out.println(adder.toString());
 			return null;
 		}
 		adder.setJoindate(new Date());
 		
-		System.out.println(adder.getJoindate());
 		dao.save(adder);
 		return adder;
 	}

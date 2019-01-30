@@ -13,8 +13,8 @@ import com.revature.entity.Maps;
 public interface MapsDao extends JpaRepository<Maps, Integer>{
 	
 	Maps findByMapname(String mapname);
+
+	List<Maps> findByStatus(String status);
 	
-	//@Transactional
-	//List<MapUsers> 
 
 }
