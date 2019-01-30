@@ -33,5 +33,25 @@ public class MapUsersController {
 	public List<MapUsers> getAll() {
 		return dao.findAll();
 	}
+	
+	@GetMapping("/users/search")
+	public MapUsers findByUsername(@RequestParam ("Username") String username) {
+		return dao.findByUsername(username);
+	}
+	
+	@PostMapping("/users/add")
+	public MapUsers add(
+			@RequestBody
+			@Valid
+			MapUsers adder, Errors errors)
+			{
+		if(errors.hasErrors())
+			return null;
+		dao.save(adder);
+		return adder;
+	}
+	
+	
+	
 
 }
