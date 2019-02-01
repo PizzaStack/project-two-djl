@@ -31,13 +31,13 @@ public class MapsController {
 	@Autowired
 	MapsDao dao;
 
-	@GetMapping("/maps")
+	@GetMapping("/api/maps")
 	public List<Maps> getAll() {
 		return dao.findAll();
 	}
 	
-	@GetMapping("/maps/search/{mapname}")
-	public Maps findByMapname(@PathVariable("mapname") String mapname) {
+	@GetMapping("/api/maps")
+	public Maps findByMapname(@RequestParam("name") String mapname) {
 		return dao.findByMapname(mapname);
 	}
 	
