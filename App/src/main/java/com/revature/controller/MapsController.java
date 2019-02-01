@@ -28,7 +28,7 @@ public class MapsController {
 		return dao.findAll();
 	}
 	
-	@GetMapping("/api/maps")
+	@GetMapping("/api/maps/")
 	public Maps findByMapname(@RequestParam("name") String mapname) {
 		return dao.findByMapname(mapname);
 	}
