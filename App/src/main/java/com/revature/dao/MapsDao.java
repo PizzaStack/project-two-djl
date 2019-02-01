@@ -15,6 +15,8 @@ public interface MapsDao extends JpaRepository<Maps, Integer>{
 	Maps findByMapname(String mapname);
 
 	List<Maps> findByStatus(String status);
+
+	List<Maps> findBySubmitter(String user);
 	
 
 }
