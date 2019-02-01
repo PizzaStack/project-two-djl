@@ -60,5 +60,16 @@ public class MapsController {
 		dao.save(adder);
 		return adder;
 	}
+	
+	@PostMapping("/maps/approve/{status}")
+	public @Valid Maps approve(
+			@RequestBody
+			@Valid
+			Maps adder, Errors errors) {
+		
+		adder.setStatus("approved");
+		dao.save(adder);
+		return adder;
+	}
 
 }
