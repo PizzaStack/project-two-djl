@@ -32,13 +32,19 @@ public class BasicAuthConfiguration extends WebSecurityConfigurerAdapter {
 
 	 @Override
 	 protected void configure(HttpSecurity http) throws Exception {
+//	    http
+//	      .csrf().disable()
+//	      .authorizeRequests()
+//          .antMatchers("/login").permitAll() // Everyone can log in
+//          .antMatchers("/").permitAll() // Everyone can view the home page
+//          .anyRequest().authenticated() // Authenticated users can make any Http request
+//	      .and()
+//	      .httpBasic();
 	    http
-	      .csrf().disable()
-	      .authorizeRequests()
-          .antMatchers("/login").permitAll() // Everyone can log in
-          .antMatchers("/").permitAll() // Everyone can view the home page
-          .anyRequest().authenticated() // Authenticated users can make any Http request
-	      .and()
-	      .httpBasic();
+	    	.authorizeRequests()
+	    	.anyRequest()
+	    	.permitAll()
+	    	.and()
+	    	.httpBasic();
 	}
 }
