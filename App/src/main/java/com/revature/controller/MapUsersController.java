@@ -41,6 +41,19 @@ public class MapUsersController {
 		return dao.findByUsername(username);
 	}
 	
+	@GetMapping("/users/search/login")
+	public Boolean login(@RequestParam ("Username") String username,
+						 @RequestParam ("Password") String password) 
+	{
+		MapUsers temp = findByUsername(username);
+		if (temp.getPassword().equals(password)){
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	
 	@PostMapping("/users/add")
 	public MapUsers add(
 			@RequestBody
@@ -48,13 +61,10 @@ public class MapUsersController {
 			MapUsers adder, Errors errors)
 			{
 		if(errors.hasErrors()) {
-			System.out.println(errors);
-			System.out.println(adder.toString());
 			return null;
 		}
 		adder.setJoindate(new Date());
 		
-		System.out.println(adder.getJoindate());
 		dao.save(adder);
 		return adder;
 	}
