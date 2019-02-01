@@ -46,6 +46,11 @@ public class MapsController {
 		return  dao.findByStatus(status);
 	}
 	
+	@GetMapping("/maps/user/{user}")
+	public List<Maps> getBySubmitter(@PathVariable("user") String user){
+		return dao.findBySubmitter(user);
+	}
+	
 	@PostMapping("/maps/add")
 	public @Valid Maps add(
 			@RequestBody
@@ -61,12 +66,13 @@ public class MapsController {
 		return adder;
 	}
 	
-	@PostMapping("/maps/approve/{status}")
+	@PostMapping("/maps/approve/")
 	public @Valid Maps approve(
 			@RequestBody
 			@Valid
 			Maps adder, Errors errors) {
 		
+		adder = dao.findByMapname(adder.getMapname());
 		adder.setStatus("approved");
 		dao.save(adder);
 		return adder;
