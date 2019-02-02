@@ -8,6 +8,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.revature.entity.MapUsers;
 
+// https://www.baeldung.com/spring-bean-scopes
 @Configuration
 public class SessionConfig {
 	@Bean
