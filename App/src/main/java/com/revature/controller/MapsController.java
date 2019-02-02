@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.dao.MapsDao;
+import com.revature.entity.MapUsers;
 import com.revature.entity.Maps;
 
 @RestController
@@ -22,6 +23,9 @@ public class MapsController {
 
 	@Autowired
 	MapsDao dao;
+	
+	@Autowired
+	private MapUsers mapUser;
 
 	@GetMapping("/api/maps")
 	public List<Maps> getAll() {
@@ -39,9 +43,11 @@ public class MapsController {
 	}
 	
 	// TODO put user name into; replace user path variable with static 'me'
-	@GetMapping("/api/maps/user/{user}")
-	public List<Maps> getBySubmitter(@PathVariable("user") String user){
-		return dao.findBySubmitter(user);
+	@GetMapping("/api/maps/me")
+	public List<Maps> getBySubmitter(){
+		System.out.println("MapUser: " + String.valueOf(mapUser));
+		return dao.findBySubmitter(!mapUser.isInvalidated() ? mapUser.getUsername() :
+			null);
 	}
 	
 	@PostMapping("/api/maps/add")

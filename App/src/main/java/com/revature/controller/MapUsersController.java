@@ -21,11 +21,17 @@ public class MapUsersController {
 
 	@Autowired
 	MapUsersDao dao;
+	
+	@Autowired
+	private MapUsers mapUser;
 
 	@GetMapping("/api/users")
-	public List<MapUsers> getAll() {
+	public List<MapUsers> getAll() throws Exception {
 		// TODO throw an error if not admin
-		return dao.findAll();
+		if (!mapUser.isInvalidated())
+			return dao.findAll();
+		else
+			throw new AdmininstratorAccessNotGrantedException();
 	}
 	
 	@GetMapping("/api/users/search")
@@ -43,7 +49,10 @@ public class MapUsersController {
 			UserLogin userlogin)
 	{
 		MapUsers temp = findByUsername(userlogin.getUsername());
-		if (temp.getPassword().equals(userlogin.getPassword())){
+		if (temp != null && 
+				temp.getPassword().equals(userlogin.getPassword())){
+			mapUser.register(temp);
+			System.out.println("MapUser: " + String.valueOf(mapUser));
 			return true;
 		} else {
 			return false;
@@ -73,8 +82,11 @@ public class MapUsersController {
 			MapUsers adder, Errors errors) {
 		
 		MapUsers added = add(adder, errors);
-		if(added != null);
+		if(added != null) {
 			// TODO then create session
+			mapUser.register(added);
+			System.out.println("MapUser: " + String.valueOf(mapUser));
+		}
 		return adder;
 	}
 
@@ -82,6 +94,8 @@ public class MapUsersController {
 	@GetMapping("/logout")
 	public String logout()
 			{
-		return "This is just a mock logout.";
+		mapUser.invalidate();
+		System.out.println("MapUser: " + String.valueOf(mapUser));
+		return "MapUser: " + String.valueOf(mapUser);
 	}
 }

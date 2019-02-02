@@ -1,4 +1,4 @@
-package com.revature.controller;
+package com.revature.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

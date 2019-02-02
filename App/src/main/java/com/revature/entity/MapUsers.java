@@ -2,26 +2,21 @@
 package com.revature.entity;
 
 
-import java.time.LocalDate;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
-import org.hibernate.type.DateType;
+import org.springframework.data.annotation.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table (name = "mapusers")
 public class MapUsers{
-	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date joindate;
@@ -79,5 +74,31 @@ public class MapUsers{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	@Transient
+	@Override
+	public String toString() {
+		return isInvalidated() ? "Invalidated" :
+			"MapUsers [joindate=" + joindate + ", username=" + username + ", password=" + password + ", email="
+				+ email + ", admin=" + admin + "]";
+	}
 	
+	@Transient
+	public boolean isInvalidated() {
+		return username == null;
+	}
+	
+	@Transient
+	public void invalidate() {
+		username = null;
+	}
+	
+	@Transient
+	public void register(MapUsers mapusers) {
+		setAdmin(mapusers.getAdmin());
+		setEmail(mapusers.getEmail());
+		setJoindate(mapusers.getJoindate());
+		setPassword(mapusers.getPassword());
+		setUsername(mapusers.getUsername());
+	}
 }
