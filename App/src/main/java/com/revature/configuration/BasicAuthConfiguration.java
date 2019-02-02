@@ -41,9 +41,9 @@ public class BasicAuthConfiguration extends WebSecurityConfigurerAdapter {
 //	      .and()
 //	      .httpBasic();
 	    http
+	    	.csrf().disable()
 	    	.authorizeRequests()
-	    	.anyRequest()
-	    	.permitAll()
+	    	.anyRequest().permitAll()
 	    	.and()
 	    	.httpBasic();
 	}
