@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.data.annotation.Transient;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -116,5 +117,12 @@ public class Maps {
 	public Maps() {
 		super();
 		// registerColumnType( Types.BLOB, "bytea" );
+	}
+
+	@Transient
+	@Override
+	public String toString() {
+		return "Maps [uploaddate=" + uploaddate + ", mapname=" + mapname + ", description=" + description
+				+ ", submitter=" + submitter + ", status=" + status + "]";
 	}
 }

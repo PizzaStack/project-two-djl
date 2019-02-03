@@ -51,31 +51,18 @@ public class MapsController {
 	}
 	
 	@PostMapping("/api/maps/upload")
-	public void updateWithFile(
+	public @Valid Maps updateWithFile(
 			@RequestBody
 			@Valid
 			Maps adder, Errors errors) throws Exception {
 		
 		if (errors.hasErrors()) {
-			return;
-		}
-		adder.setUploaddate(new Date());
-		
-		dao.save(adder);
-	}
-	
-	@PostMapping("/api/maps/add")
-	public @Valid Maps add(
-			@RequestBody
-			@Valid
-			Maps adder, Errors errors)
-			{
-		if(errors.hasErrors()) {
 			return null;
 		}
 		adder.setUploaddate(new Date());
 		
 		dao.save(adder);
+		System.out.println("Uploaded map: " + String.valueOf(adder));
 		return adder;
 	}
 	
