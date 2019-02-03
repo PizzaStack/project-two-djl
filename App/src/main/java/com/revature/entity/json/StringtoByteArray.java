@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 public class StringtoByteArray extends JsonDeserializer<byte[]> {
 	@Override
 	public byte[] deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-		byte[] simple = p.getText().getBytes(StandardCharsets.UTF_8);
-		return Base64.getEncoder().encode(simple);
+		return p.getText().getBytes(StandardCharsets.UTF_8);
 	}
 }
