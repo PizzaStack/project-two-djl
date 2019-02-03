@@ -1030,7 +1030,7 @@ var AuthenticationService = /** @class */ (function () {
     function AuthenticationService(http, router) {
         this.http = http;
         this.router = router;
-        this.authUrl = 'http://localhost:8080';
+        this.authUrl = '';
         this.currentUserSubject = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"](JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
@@ -1117,7 +1117,7 @@ var MapService = /** @class */ (function () {
         this.http = http;
         this.messageService = messageService;
         // private mapUrl = 'http://localhost:8080/api/maps';
-        this.mapUrl = 'http://localhost:8080/api/maps';
+        this.mapUrl = '/api/maps';
     }
     MapService.prototype.getMapList = function () {
         var _this = this;
@@ -1263,7 +1263,7 @@ var UserService = /** @class */ (function () {
     function UserService(httpClient, messageService) {
         this.httpClient = httpClient;
         this.messageService = messageService;
-        this.userUrl = 'http://localhost:8080/api/users';
+        this.userUrl = '/api/users';
     }
     UserService.prototype.getUser = function (username) {
         var _this = this;
