@@ -29,13 +29,14 @@ public class MapUsersController {
 	@GetMapping("/api/users")
 	public List<MapUsers> getAll() throws Exception {
 		// TODO throw an error if not admin
-		if (!mapUser.isInvalidated())
+		if (!mapUser.isInvalidated() &&
+				"admin".equalsIgnoreCase(mapUser.getAdmin()))
 			return dao.findAll();
 		else
 			throw new AdmininstratorAccessNotGrantedException();
 	}
 	
-	@GetMapping("/api/users/search")
+	@PostMapping("/api/users/search")
 	public MapUsers findByUsername(
 			@RequestBody
 			@Valid String username) {
@@ -43,8 +44,8 @@ public class MapUsersController {
 	}
 	
 	// TODO create session data upon login
-	@GetMapping("/login")
-	public Boolean login(
+	@PostMapping("/login")
+	public MapUsers login(
 			@RequestBody
 			@Valid 
 			UserLogin userlogin)
@@ -54,10 +55,13 @@ public class MapUsersController {
 				temp.getPassword().equals(userlogin.getPassword())){
 			mapUser.register(temp);
 			System.out.println("MapUser: " + String.valueOf(mapUser));
-			return true;
+			temp.setPassword(null);
+			System.out.println(temp);
 		} else {
-			return false;
+			if (temp != null)
+				temp.invalidate();
 		}
+		return temp;
 	}
 
 	@PostMapping("/api/users/update")
@@ -70,13 +74,14 @@ public class MapUsersController {
 			return null;
 		}
 		adder.setJoindate(new Date());
+		adder.setAdmin("user");
 		
 		dao.save(adder);
 		return adder;
 	}
 	
 	// TODO create session data upon new user
-	@PostMapping("/registration")
+	@PostMapping("/api/users/register")
 	public MapUsers register (
 			@RequestBody
 			@Valid
@@ -97,6 +102,6 @@ public class MapUsersController {
 			{
 		mapUser.invalidate();
 		System.out.println("MapUser: " + String.valueOf(mapUser));
-		return "MapUser: " + String.valueOf(mapUser);
+		return "logged out";
 	}
 }

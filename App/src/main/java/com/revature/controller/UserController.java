@@ -17,7 +17,7 @@ import com.revature.entity.User;
 @CrossOrigin
 public class UserController {
  
-    @RequestMapping("/login")
+    @RequestMapping("/login123")
     public boolean login(@RequestBody User user) {
           return user.getUserName().equals("user") && user.getPassword().equals("password");
     }

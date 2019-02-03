@@ -32,8 +32,8 @@ public class MapsController {
 		return dao.findAll();
 	}
 	
-	@GetMapping("/api/maps/")
-	public Maps findByMapname(@RequestParam("name") String mapname) {
+	@GetMapping("/api/maps/{name}")
+	public Maps findByMapname(@PathVariable("name") String mapname) {
 		return dao.findByMapname(mapname);
 	}
 	
@@ -49,6 +49,13 @@ public class MapsController {
 		return dao.findBySubmitter(!mapUser.isInvalidated() ? mapUser.getUsername() :
 			null);
 	}
+	
+//	@PostMapping("/api/maps/upload")
+//	public @Valid Maps updateWithFile (
+//			@RequestParam("")
+//			Maps adder, Errors errors) {
+//		return null;
+//	}
 	
 	@PostMapping("/api/maps/add")
 	public @Valid Maps add(
@@ -73,6 +80,8 @@ public class MapsController {
 		
 		Maps adder = dao.findByMapname(name);
 		adder.setStatus("approved");
+		System.out.println(adder.getStatus());
+		System.out.println(adder.getMapname());
 		dao.save(adder);
 		return adder;
 	}
