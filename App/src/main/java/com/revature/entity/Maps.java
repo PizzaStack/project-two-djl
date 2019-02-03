@@ -1,11 +1,8 @@
 package com.revature.entity;
 
-import java.sql.Types;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
@@ -16,6 +13,11 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.revature.entity.json.ByteArraytoString;
+import com.revature.entity.json.StringtoByteArray;
+
 @Entity
 @Table(name = "maps")
 public class Maps {
@@ -23,29 +25,33 @@ public class Maps {
 //	@Lob
 //	@Column(name = "file")
 //	@Type(type="org.hibernate.type.BinaryType")
-//	@Type(type="org.hibernate.type.PrimitiveByteArrayBlobType")
+//	@Type(type="org.hibernate.type.PrimitivebyteArrayBlobType")
 	@Lob
 
 	@Type(type = "org.hibernate.type.BinaryType")
-	private Byte[] file;
+	@JsonDeserialize(using = StringtoByteArray.class)
+	@JsonSerialize(using = ByteArraytoString.class)
+	private byte[] file;
 
-	public Byte[] getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
-	public void setImage(Byte[] image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 
 	@Lob
 	@Type(type = "org.hibernate.type.BinaryType")
-	private Byte[] image;
+	@JsonDeserialize(using = StringtoByteArray.class)
+	@JsonSerialize(using = ByteArraytoString.class)
+	private byte[] image;
 
-	public Byte[] getFile() {
+	public byte[] getFile() {
 		return file;
 	}
 
-	public void setFile(Byte[] file) {
+	public void setFile(byte[] file) {
 		this.file = file;
 	}
 
@@ -58,7 +64,8 @@ public class Maps {
 	}
 
 	public void setUploaddate(Date uploaddate) {
-		this.uploaddate = uploaddate;
+		if (this.uploaddate != null)
+			this.uploaddate = uploaddate;
 	}
 
 	@Id
