@@ -37,6 +37,11 @@ public class MapsController {
 		return dao.findByMapname(mapname);
 	}
 	
+	@GetMapping("/api/maps/submitter")
+	public List<Maps> findBySubmitter(@RequestParam(name = "submitter") String submitterName) {
+		return dao.findBySubmitter(submitterName);
+	}
+	
 	@GetMapping("/api/maps/status/{status}")
 	public List<Maps> getByStatus(@PathVariable("status") String status){
 		return  dao.findByStatus(status);
